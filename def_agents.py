@@ -126,7 +126,7 @@ def TableDrivenAgentProgram(table):
     def program(percept):
         percepts.append(percept)
         action = table.get(tuple(percepts))
-        print(percept, action)
+        print(action, percept)
         return action
     return program
 
