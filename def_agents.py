@@ -135,7 +135,6 @@ def RandomAgentProgram(actions):
     """An agent that chooses an action at random, ignoring all percepts."""
     def program(percept):
         action = random.choice(actions)
-        print(percept, action)
         return action
     return program
 

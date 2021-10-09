@@ -48,7 +48,7 @@ class TrivialSnookerEnvironment(Environment):
         """Change balls potted and remaining status; track performance.
         Score ball value for each correct ball potted; -4, -5, -6 or -7
         depending on ball value for each invalid one."""
-        if action is not "NoOp":
+        if action != "NoOp":
             ballsOn = self.ballsOn()
             if ballsOn is None:
                 agent.performance -= max(4, values[action])
@@ -61,7 +61,7 @@ class TrivialSnookerEnvironment(Environment):
     def pot(self, ball):
         if ball == red:
             self.ballsRemaining().remove(ball)
-        if ball in colours and self.lowestValueBallRemaining() != red:
+        if ball in colours and self.ballsPotted()[-1] != red:
             self.ballsRemaining().remove(ball)
         self.ballsPotted().append(ball)
 
@@ -102,20 +102,28 @@ def run_SnookerAgent(agent):
     print(f'Performance: {agent.performance}')
 
 
-def ReflexSnookerAgent():
-    """A reflex agent for the trivial snooker environment. [Figure 2.8]"""
+def MaximumSnookerAgent():
+    """A simple maximum scoring agent for the trivial snooker environment. [Figure 2.8]"""
+    shotsList = []
+    for r in range(15):
+        shotsList.append(red)
+        shotsList.append(black)
+
+    for s in [yellow, green, brown, blue, pink, black]:
+        shotsList.append(s)
+
     def program(percept):
-        potted = percept['balls potted']
-        if not potted:
-            action = red
-        elif potted[-1] == red:
-            action = black
+
+        if shotsList:
+            action = shotsList.pop(0)
         else:
-            action = red
-        
+            action = 'NoOp'
+
         return action
+
     return Agent(program)
 
 
 if __name__ == '__main__':
-    run_SnookerAgent(ReflexSnookerAgent())
+    run_SnookerAgent(RandomSnookerAgent())
+    run_SnookerAgent(MaximumSnookerAgent())
