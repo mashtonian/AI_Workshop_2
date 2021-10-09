@@ -112,7 +112,7 @@ def ReflexSnookerAgent():
             action = black
         else:
             action = red
-        print(percept, action)
+        
         return action
     return Agent(program)
 
