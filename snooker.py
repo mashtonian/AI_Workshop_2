@@ -2,17 +2,17 @@ from def_agents import Agent, RandomAgentProgram
 from def_agents import Environment
 from def_agents import Thing
 
-red, yellow, green, brown, blue, pink, black = "Red", "Yellow", "Green", "Brown", "Blue", "Pink", "Black"
+RED, YELLOW, GREEN, BROWN, BLUE, PINK, BLACK = "Red", "Yellow", "Green", "Brown", "Blue", "Pink", "Black"
 
-colours = [yellow, green, brown, blue, pink, black]
+colours = [YELLOW, GREEN, BROWN, BLUE, PINK, BLACK]
 
-values = {red: 1,
-          yellow: 2,
-          green: 3,
-          brown: 4,
-          blue: 5,
-          pink: 6,
-          black: 7
+values = {RED: 1,
+          YELLOW: 2,
+          GREEN: 3,
+          BROWN: 4,
+          BLUE: 5,
+          PINK: 6,
+          BLACK: 7
           }
 
 
@@ -30,7 +30,7 @@ class TrivialSnookerEnvironment(Environment):
                        'balls potted': []}
 
         for i in range(15):
-            self.ballsRemaining().append(red)
+            self.ballsRemaining().append(RED)
         for c in colours:
             self.ballsRemaining().append(c)
 
@@ -59,9 +59,9 @@ class TrivialSnookerEnvironment(Environment):
                 agent.performance -= max(4, values[action])
 
     def pot(self, ball):
-        if ball == red:
+        if ball == RED:
             self.ballsRemaining().remove(ball)
-        if ball in colours and self.ballsPotted()[-1] != red:
+        if ball in colours and self.ballsPotted()[-1] != RED:
             self.ballsRemaining().remove(ball)
         self.ballsPotted().append(ball)
 
@@ -69,14 +69,14 @@ class TrivialSnookerEnvironment(Environment):
         if len(self.ballsRemaining()) == 0:
             return None
         elif len(self.ballsPotted()) == 0:
-            return [red]
+            return [RED]
 
         lastBallPotted = self.ballsPotted()[-1]
 
-        if lastBallPotted == red:
+        if lastBallPotted == RED:
             return colours
-        elif lastBallPotted in colours and self.lowestValueBallRemaining() == red:
-            return [red]
+        elif lastBallPotted in colours and self.lowestValueBallRemaining() == RED:
+            return [RED]
         else:
             return [self.lowestValueBallRemaining()]
 
@@ -88,7 +88,7 @@ class TrivialSnookerEnvironment(Environment):
 
 def RandomSnookerAgent():
     """Randomly choose a ball colour to pot."""
-    return Agent(RandomAgentProgram([red, yellow, green, brown, blue, pink, black, "NoOp"]))
+    return Agent(RandomAgentProgram([RED, YELLOW, GREEN, BROWN, BLUE, PINK, BLACK, "NoOp"]))
 
 
 def run_SnookerAgent(agent):
@@ -106,10 +106,10 @@ def MaximumSnookerAgent():
     """A simple maximum scoring agent for the trivial snooker environment. [Figure 2.8]"""
     shotsList = []
     for r in range(15):
-        shotsList.append(red)
-        shotsList.append(black)
+        shotsList.append(RED)
+        shotsList.append(BLACK)
 
-    for s in [yellow, green, brown, blue, pink, black]:
+    for s in [YELLOW, GREEN, BROWN, BLUE, PINK, BLACK]:
         shotsList.append(s)
 
     def program(percept):
