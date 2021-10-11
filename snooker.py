@@ -51,12 +51,15 @@ class TrivialSnookerEnvironment(Environment):
         if action != "NoOp":
             ballsOn = self.ballsOn()
             if ballsOn is None:
-                agent.performance -= max(4, values[action])
+                agent.performance -= self.foulValueFor(action)
             elif action in ballsOn:
                 agent.performance += values[action]
                 self.pot(action)
             else:
-                agent.performance -= max(4, values[action])
+                agent.performance -= self.foulValueFor(action)
+
+    def foulValueFor(self, action):
+        return max(4, values[action])
 
     def pot(self, ball):
         if ball == RED:
