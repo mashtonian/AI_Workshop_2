@@ -1,6 +1,7 @@
 from def_agents import Agent, RandomAgentProgram
 from def_agents import Environment
-from def_agents import Thing
+
+import numpy
 
 RED, YELLOW, GREEN, BROWN, BLUE, PINK, BLACK = "Red", "Yellow", "Green", "Brown", "Blue", "Pink", "Black"
 
@@ -107,10 +108,8 @@ def run_SnookerAgent(agent):
 
 def MaximumSnookerAgent():
     """A simple maximum scoring agent for the trivial snooker environment. [Figure 2.8]"""
-    shotsList = []
-    for r in range(15):
-        shotsList.append(RED)
-        shotsList.append(BLACK)
+
+    shotsList = numpy.tile([RED, BLACK], 15).tolist()
 
     for s in [YELLOW, GREEN, BROWN, BLUE, PINK, BLACK]:
         shotsList.append(s)
